@@ -5,6 +5,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 public class Biblioteca {
     private ArrayList<Bibliotecario> bibliotecarios = new ArrayList<>();
@@ -217,5 +218,95 @@ public class Biblioteca {
     
     double bonificacion = porcentajeBase * 0.02 * aniosAntiguedad;  // Bonificación del 2% por año de antigüedad
     return porcentajeBase + bonificacion;
-}
+}   
+    public static void consultarPrestamoPorCodigo(Biblioteca biblioteca, Scanner scanner) {
+        System.out.print("Ingrese el código del préstamo que desea consultar: ");
+        String codigoPrestamo = scanner.nextLine();
+
+        Prestamo prestamoConsultado = biblioteca.consultarDatosPrestamoPorCodigo(codigoPrestamo);
+
+        if (prestamoConsultado != null) {
+            System.out.println("\n--- Detalles del Préstamo ---");
+            System.out.println("Código: " + prestamoConsultado.getCodigo());
+            System.out.println("Libro: " + prestamoConsultado.getLibro().getTitulo());
+            System.out.println("Estudiante: " + prestamoConsultado.getEstudiante().getNombre());
+            System.out.println("Bibliotecario: " + prestamoConsultado.getBibliotecario().getNombre());
+            System.out.println("Fecha de Préstamo: " + prestamoConsultado.getFechaPrestamo());
+            System.out.println("-----------------------------\n");
+        } else {
+            System.out.println("No se encontró un préstamo con el código proporcionado.\n");
+        }
+
+    /**
+     * Método para reemplazar un libro en la biblioteca dado su código.
+     * @param biblioteca La instancia de la Biblioteca.
+     * @param scanner El Scanner para la entrada del usuario
+     */
+    }
+    public static void reemplazarLibro(Biblioteca biblioteca, Scanner scanner) {
+        System.out.print("Ingrese el código del libro a reemplazar: ");
+        String codigoLibro = scanner.nextLine();
+
+        Libro libroNuevo = crearLibro(scanner);
+        boolean reemplazado = biblioteca.reemplazarLibro(codigoLibro, libroNuevo);
+
+        if (reemplazado) {
+            System.out.println("El libro con código " + codigoLibro + " ha sido reemplazado con éxito.");
+        } else {
+            System.out.println("No se encontró un libro con el código " + codigoLibro + ".");
+        }
+    }
+    /**
+     * Método para crear un nuevo libro a partir de la entrada del usuario.
+     * @param scanner El Scanner para la entrada del usuario.
+     * @return El nuevo libro creado.
+     */
+    private static Libro crearLibro(Scanner scanner) {
+        System.out.print("Ingrese el código del nuevo libro: ");
+        String codigo = scanner.nextLine();
+        System.out.print("Ingrese el ISBN del nuevo libro: ");
+        String isbn = scanner.nextLine();
+        System.out.print("Ingrese el autor del nuevo libro: ");
+        String autor = scanner.nextLine();
+        System.out.print("Ingrese el título del nuevo libro: ");
+        String titulo = scanner.nextLine();
+        System.out.print("Ingrese la editorial del nuevo libro: ");
+        String editorial = scanner.nextLine();
+        System.out.print("Ingrese la fecha de publicación (YYYY-MM-DD): ");
+        LocalDate fechaPublicacion = LocalDate.parse(scanner.nextLine());
+        System.out.print("Ingrese las unidades disponibles: ");
+        int unidadesDisponibles = Integer.parseInt(scanner.nextLine());
+        System.out.print("Ingrese el valor del libro: ");
+        double valor = Double.parseDouble(scanner.nextLine());
+
+        return new Libro(codigo, isbn, autor, titulo, editorial, fechaPublicacion, unidadesDisponibles, valor);
+    }
+
+    /**
+     * Método para consultar y mostrar los datos de un libro dado su código.
+     * @param biblioteca La instancia de la Biblioteca.
+     */
+
+    public static void consultarLibroPorCodigo(Biblioteca biblioteca) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese el código del libro que desea consultar: ");
+        String codigoLibro = scanner.nextLine();
+
+        Libro libroConsultado = biblioteca.consultarDatosLibroPorCodigo(codigoLibro);
+
+        if (libroConsultado != null) {
+            System.out.println("\n--- Detalles del Libro ---");
+            System.out.println("Código: " + libroConsultado.getCodigo());
+            System.out.println("ISBN: " + libroConsultado.getIsbn());
+            System.out.println("Autor: " + libroConsultado.getAutor());
+            System.out.println("Título: " + libroConsultado.getTitulo());
+            System.out.println("Editorial: " + libroConsultado.getEditorial());
+            System.out.println("Fecha de Publicación: " + libroConsultado.getFechaPublicacion());
+            System.out.println("Unidades Disponibles: " + libroConsultado.getUnidadesDisponibles());
+            System.out.println("Valor: $" + libroConsultado.getValor());
+            System.out.println("--------------------------\n");
+        } else {
+            System.out.println("No se encontró un libro con el código proporcionado.\n");
+        }
+    }
 }

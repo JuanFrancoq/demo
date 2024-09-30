@@ -106,5 +106,6 @@ public class Libro {
                 + ", editorial=" + editorial + ", fechaPublicacion=" + fechaPublicacion + ", unidadesDisponibles="
                 + unidadesDisponibles + ", valor=" + valor + "]";
     }
+    
 
 }
