@@ -184,7 +184,13 @@ public class Biblioteca {
                 .orElse(null);  // Retorna null si no hay estudiantes
     }
 
-    private int contarPrestamosPorEstudiante(Estudiante estudiante) {
+    /**
+     * 
+     * @param estudiante
+     * @return
+     */
+
+    public int contarPrestamosPorEstudiante(Estudiante estudiante) {
         return (int) prestamos.stream()
                 .filter(prestamo -> prestamo.getEstudiante().equals(estudiante))
                 .count();
@@ -196,7 +202,6 @@ public class Biblioteca {
         for (Prestamo prestamo : prestamos) {
             totalRecaudado += prestamo.calcularSubtotal();
         }
-    
         return totalRecaudado;
     }
     public double calcularPagoBibliotecario(Bibliotecario bibliotecario) {
@@ -309,4 +314,5 @@ public class Biblioteca {
             System.out.println("No se encontró un libro con el código proporcionado.\n");
         }
     }
+    
 }
