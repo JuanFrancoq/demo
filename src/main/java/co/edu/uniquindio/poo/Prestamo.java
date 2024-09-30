@@ -51,7 +51,7 @@ public class Prestamo {
         return subtotal;
     }
     public void agregarDetalle(DetallePrestamo detallePrestamo) {
-        detalles.add(detallePrestamo); // Agrega el detalle a la lista
+        this.detalles.add(detallePrestamo); // Agrega el detalle a la lista
         System.out.println("Detalle añadido: " + detallePrestamo.getLibro().getTitulo() + " - Cantidad: " + detallePrestamo.getCantidad());
     }
     
