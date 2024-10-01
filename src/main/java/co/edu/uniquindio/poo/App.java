@@ -1,5 +1,8 @@
 package co.edu.uniquindio.poo;
 
+
+
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -8,12 +11,16 @@ public class App {
         Biblioteca biblioteca = new Biblioteca();
         Scanner scanner = new Scanner(System.in);
 
-        // Crear bibliotecarios
+        /**
+         * Crear bibliotecario
+         */
         Bibliotecario bibliotecario = new Bibliotecario("Raul", "1234", "raul@uniquindio.edu.co", 311334455, 200000.0,
                 LocalDate.of(2014, 12, 15));
         biblioteca.agregarBibliotecario(bibliotecario);
 
-        // Crear estudiantes
+        /**
+         * Crear Estudiante
+         */
 
         Estudiante estudiante1 = new Estudiante("Luisa", "112233", "luisa@uniquindio.edu.co", 31552524, true);
         Estudiante estudiante2 = new Estudiante("Miguel", "112244", "miguel@uniquindio.edu.co", 31782834, false);
@@ -22,15 +29,19 @@ public class App {
         biblioteca.agregarEstudiante(estudiante2);
         biblioteca.agregarEstudiante(estudiante3);
 
-        // Crear libros
-        Libro libro1 = new Libro("001", "978-3-16-148410-0", "Autor 1", "Libro A", "Editorial 1",
+        /**
+         * Crear libros
+         */
+        Libro libro1 = new Libro("001", "1b2c3d", "Autor 1", "Libro A", "Editorial 1",
                 LocalDate.of(2010, 5, 20), 5, 15000.0);
-        Libro libro2 = new Libro("002", "978-3-16-148410-1", "Autor 2", "Libro B", "Editorial 2",
+        Libro libro2 = new Libro("002", "1a2b3c", "Autor 2", "Libro B", "Editorial 2",
                 LocalDate.of(2012, 6, 15), 3, 20000.0);
         biblioteca.agregarLibro(libro1);
         biblioteca.agregarLibro(libro2);
 
-        // Crear préstamo
+        /**
+         * Crear prestamos
+         */
         Prestamo prestamo1 = new Prestamo("P001", libro1, estudiante1, bibliotecario, LocalDate.now());
         DetallePrestamo detallePrestamo1 = new DetallePrestamo(2, prestamo1, libro1);
         prestamo1.agregarDetalle(detallePrestamo1); // Agregar detalle al préstamo
@@ -53,48 +64,103 @@ public class App {
         System.out.println("Subtotal del préstamo3: " + prestamo3.calcularSubtotal());
 
 
-        // Consultar libro por código
-        Biblioteca.consultarLibroPorCodigo(biblioteca);
+        int opcion = 0;
+        while (opcion != 9) {
+            // Menú interactivo
+            System.out.println("\nMenú Biblioteca");
+            System.out.println("1. Reemplazar libro");
+            System.out.println("2. Consultar libro por código");
+            System.out.println("3. Consultar préstamos de un libro por título");
+            System.out.println("4. Consultar préstamo por código");
+            System.out.println("5. Mostrar préstamos realizados por cada bibliotecario");
+            System.out.println("6. Mostrar estudiante con más préstamos");
+            System.out.println("7. Calcular total recaudado");
+            System.out.println("8. Calcular pago a bibliotecario");
+            System.out.println("9. Salir");
+            System.out.print("Selecciona una opción: ");
+            
+            if (scanner.hasNextInt()) {
+                opcion = scanner.nextInt();
+                scanner.nextLine(); 
+            } else {
+                System.out.println("Opción no válida. Intenta nuevamente.");
+                scanner.nextLine(); 
+                continue;
+            }
 
-        // Contar préstamos de un libro por título
-        int cantidadPrestamos = biblioteca.contarPrestamosPorLibro("Libro A");
-        System.out.println("Cantidad de préstamos de 'Libro A': " + cantidadPrestamos);
-
-        int cantidadPrestamosNombre = biblioteca.contarPrestamosPorNombreLibro("Libro A");
-        System.out.println("El libro 'Libro A' ha sido prestado " + cantidadPrestamosNombre + " veces.");
-
-        // Reemplazar libro
-        Biblioteca.reemplazarLibro(biblioteca, scanner);
-
-        // Consultar préstamo por código
-        Biblioteca.consultarPrestamoPorCodigo(biblioteca, scanner);
-
-        // Mostrar cantidad de préstamos realizados por cada bibliotecario
-        biblioteca.mostrarPrestamosPorBibliotecario();
-
-        biblioteca.obtenerEstudianteConMasPrestamos();
-
-        biblioteca.calcularTotalRecaudado();
-
-        biblioteca.calcularPagoBibliotecario(bibliotecario);
-
-        // Cerrar el scanner
-        scanner.close();
-
-        // Obtener y mostrar el estudiante con más préstamos
-        Estudiante topEstudiante = biblioteca.obtenerEstudianteConMasPrestamos();
-        System.out.println("Estudiante con más préstamos: "
-                + (topEstudiante != null ? topEstudiante.getNombre() : "No hay estudiantes"));
-
-        // Calcular total recaudado por la empresa
-        double totalRecaudado = biblioteca.calcularTotalRecaudado();
-        System.out.println("Total recaudado por la empresa: $" + totalRecaudado);
-
-        // Calcular y mostrar pagos a los bibliotecarios
-        for (Bibliotecario b : biblioteca.getBibliotecarios()) {
-            double pago = biblioteca.calcularPagoBibliotecario(b);
-            System.out.println("Pago a " + b.getNombre() + ": $" + pago);
+            switch (opcion) {
+                case 1:
+                    /**
+                     * reemplazar libro
+                     */
+                    Biblioteca.reemplazarLibro(biblioteca, scanner);
+                    break;
+                case 2:
+                    /**
+                     * consultar libro por codigo
+                     */
+                    Biblioteca.consultarLibroPorCodigo(biblioteca);
+                    break;
+                case 3:
+                    /**
+                     * consultar  prestamos de libro por titulo
+                     */
+                    System.out.print("Ingresa el título del libro: ");
+                    String titulo = scanner.nextLine();
+                    int cantidadPrestamos = biblioteca.contarPrestamosPorLibro(titulo);
+                    System.out.println("Cantidad de préstamos del libro '" + titulo + "': " + cantidadPrestamos);
+                    break;
+                case 4:
+                    /**
+                     * consultar prestamos por codigo
+                     */
+                    Biblioteca.consultarPrestamoPorCodigo(biblioteca, scanner);
+                    break;
+                case 5:
+                    /**
+                     * mostrar prestamos realizados por cada bibliotecario
+                     */
+                    biblioteca.mostrarPrestamosPorBibliotecario();
+                    break;
+                case 6:
+                    /**
+                     * mostrar estudiante con mas prestamos
+                     */
+                    Estudiante topEstudiante = biblioteca.obtenerEstudianteConMasPrestamos();
+                    System.out.println("Estudiante con más préstamos: "
+                            + (topEstudiante != null ? topEstudiante.getNombre() : "No hay estudiantes"));
+                    break;
+                case 7:
+                    /**
+                     * calcular total recaudado por la empresa
+                     */
+                    double totalRecaudado = biblioteca.calcularTotalRecaudado();
+                    System.out.println("Total recaudado por la empresa: $" + totalRecaudado);
+                    break;
+                case 8:
+                    /**
+                     * calcular pago de bibliotecario
+                     */
+                    for (Bibliotecario b : biblioteca.getBibliotecarios()) {
+                        double pago = biblioteca.calcularPagoBibliotecario(b);
+                        System.out.println("Pago a " + b.getNombre() + ": $" + pago);
+                    }
+                    break;
+                case 9:
+                    /**
+                     * salir del programa 
+                     */
+                    System.out.println("Saliendo del programa...");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intenta nuevamente.");
+            }
         }
+
+        /**
+         * cerrar el scanner
+         */
+        scanner.close();
     }
 
 }

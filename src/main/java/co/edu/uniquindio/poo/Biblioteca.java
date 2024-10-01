@@ -17,22 +17,34 @@ public class Biblioteca {
         return bibliotecarios;
     }
 
-    // Método para agregar bibliotecarios
+    /**
+     * Método para agregar bibliotecario
+     * @param bibliotecario
+     */
     public void agregarBibliotecario(Bibliotecario bibliotecario) {
         bibliotecarios.add(bibliotecario);
     }
 
-    // Método para agregar estudiantes
+    /**
+     * Método para agregar estudiante
+     * @param estudiante
+     */
     public void agregarEstudiante(Estudiante estudiante) {
         estudiantes.add(estudiante);
     }
 
-    // Método para agregar libros
+    /**
+     * Método para agregar libros
+     * @param libro
+     */
     public void agregarLibro(Libro libro) {
         libros.add(libro);
     }
 
-    // Método para crear préstamos
+    /**
+     * Método para crear préstamo
+     * @param prestamo
+     */
     public void crearPrestamo(Prestamo prestamo) {
         prestamos.add(prestamo);
         for (DetallePrestamo detalle : prestamo.getDetalles()) {
@@ -40,7 +52,11 @@ public class Biblioteca {
         }
     }
 
-    // Método para buscar libro por código
+    /**
+     * Método para buscar libro por código
+     * @param codigoLibro
+     * @return
+     */
     public Libro buscarLibroPorCodigo(String codigoLibro) {
         for (Libro libro : libros) {
             if (libro.getCodigo().equals(codigoLibro)) {
@@ -52,8 +68,8 @@ public class Biblioteca {
 
     /**
      * Método para consultar los datos de un libro dado su código.
-     * @param codigoLibro El código del libro a consultar.
-     * @return El objeto Libro si se encuentra, null en caso contrario.
+     * @param codigoLibro 
+     * @return 
      */
     public Libro consultarDatosLibroPorCodigo(String codigoLibro) {
         return buscarLibroPorCodigo(codigoLibro);
@@ -61,8 +77,8 @@ public class Biblioteca {
 
     /**
      * Método para contar la cantidad de préstamos de un libro por su título.
-     * @param titulo El título del libro.
-     * @return La cantidad de préstamos.
+     * @param titulo 
+     * @return 
      */
     public int contarPrestamosPorLibro(String titulo) {
         int contador = 0;
@@ -76,8 +92,8 @@ public class Biblioteca {
 
     /**
      * Método para reemplazar un libro por otro dado su código.
-     * @param codigo El código del libro a reemplazar.
-     * @param nuevoLibro El nuevo objeto Libro que lo reemplazará.
+     * @param codigo 
+     * @param nuevoLibro 
      */
     public boolean reemplazarLibro(String codigoLibroAntiguo, Libro nuevoLibro) {
         for (int i = 0; i < libros.size(); i++) {
@@ -89,7 +105,12 @@ public class Biblioteca {
         return false;
     }
 
-    // Método para adicionar un libro al préstamo
+    /**
+     * Método para adicionar un libro al préstamo
+     * @param codigoPrestamo
+     * @param libro
+     * @return
+     */
     public boolean adicionarLibroAPrestamo(String codigoPrestamo, Libro libro) {
         for (Prestamo prestamo : prestamos) {
             if (prestamo.getCodigo().equals(codigoPrestamo)) {
@@ -103,10 +124,14 @@ public class Biblioteca {
                 }
             }
         }
-        return false; // Préstamo no encontrado
+        return false;
     }
 
-    // Método para entregar un préstamo
+    /**
+     * Método para entregar un préstamo
+     * @param codigoPrestamo
+     * @param fechaEntrega
+     */
     public void entregarPrestamo(String codigoPrestamo, LocalDate fechaEntrega) {
         for (Prestamo prestamo : prestamos) {
             if (prestamo.getCodigo().equals(codigoPrestamo)) {
@@ -129,23 +154,20 @@ public class Biblioteca {
         System.out.println("Préstamo no encontrado.");
     }
 
-    // Método para calcular el costo del préstamo
+    /**
+     * Método para calcular el costo del préstamo
+     * @param prestamo
+     * @param diasPrestamo
+     * @return
+     */
     private double calcularCostoPrestamo(Prestamo prestamo, long diasPrestamo) {
         double costoPorDia = 1000; // Define el costo por día
         return diasPrestamo * costoPorDia;
     }
 
-    // Método para consultar datos de un préstamo
-    public Prestamo consultarDatosPrestamo(String codigoPrestamo) {
-        for (Prestamo prestamo : prestamos) {
-            if (prestamo.getCodigo().equals(codigoPrestamo)) {
-                return prestamo;
-            }
-        }
-        return null; // No encontrado
-    }
-
-    // Método para mostrar la cantidad de préstamos realizados por cada bibliotecario
+    /**
+     * Método para mostrar la cantidad de préstamos realizados por cada bibliotecario
+     */
     public void mostrarPrestamosPorBibliotecario() {
         for (Bibliotecario bibliotecario : bibliotecarios) {
             int contador = 0;
@@ -157,6 +179,11 @@ public class Biblioteca {
             System.out.println("Bibliotecario: " + bibliotecario.getNombre() + " - Préstamos realizados: " + contador);
         }
     }
+    /**
+     * Método para contar prestamos por nombre del libro 
+     * @param nombreLibro
+     * @return
+     */
     public int contarPrestamosPorNombreLibro(String nombreLibro) {
         int contador = 0;
         
@@ -168,34 +195,42 @@ public class Biblioteca {
         
         return contador;
     }
-    // Método para consultar un préstamo por código
+    /**
+     * Método para consultar un préstamo por código
+     * @param codigo
+     * @return
+     */
     public Prestamo consultarDatosPrestamoPorCodigo(String codigo) {
         for (Prestamo prestamo : prestamos) {
             if (prestamo.getCodigo().equals(codigo)) {
                 return prestamo;
             }
         }
-        return null; // Retorna null si no se encuentra el préstamo
+        return null;
     }
-    // Mostrar los datos del estudiante con más préstamos (sin importar el libro)
+    /**
+     * Mostrar los datos del estudiante con más préstamos 
+     * @return
+     */
     public Estudiante obtenerEstudianteConMasPrestamos() {
         return estudiantes.stream()
                 .max(Comparator.comparingInt(est -> contarPrestamosPorEstudiante(est)))
                 .orElse(null);  // Retorna null si no hay estudiantes
     }
-
     /**
-     * 
+     * contar libros por estudiante
      * @param estudiante
      * @return
      */
-
     public int contarPrestamosPorEstudiante(Estudiante estudiante) {
         return (int) prestamos.stream()
                 .filter(prestamo -> prestamo.getEstudiante().equals(estudiante))
                 .count();
     }
-    // Total de dinero recaudado por la empresa
+    /**
+     * Total de dinero recaudado por la empresa
+     * @return
+     */
     public double calcularTotalRecaudado() {
         double totalRecaudado = 0;
     
@@ -206,17 +241,17 @@ public class Biblioteca {
     }
     public double calcularPagoBibliotecario(Bibliotecario bibliotecario) {
     double totalPrestamosBibliotecario = 0;
-
-    // Calcular el total de los préstamos realizados por el bibliotecario
     for (Prestamo prestamo : prestamos) {
         if (prestamo.getBibliotecario().equals(bibliotecario)) {
             totalPrestamosBibliotecario += prestamo.calcularSubtotal();
         }
     }
 
-    double porcentajeBase = totalPrestamosBibliotecario * 0.20;  // 20% del valor de cada préstamo
+    double porcentajeBase = totalPrestamosBibliotecario * 0.20; 
 
-    // Calcular años de antigüedad usando la fecha de ingreso
+    /**
+     * // Calcular años de antigüedad usando la fecha de ingreso
+     */
     LocalDate fechaActual = LocalDate.now();
     LocalDate fechaIngreso = bibliotecario.getFechaIngreso();
     int aniosAntiguedad = Period.between(fechaIngreso, fechaActual).getYears(); // Calcular años de antigüedad
@@ -241,13 +276,12 @@ public class Biblioteca {
         } else {
             System.out.println("No se encontró un préstamo con el código proporcionado.\n");
         }
-
+    }
     /**
      * Método para reemplazar un libro en la biblioteca dado su código.
-     * @param biblioteca La instancia de la Biblioteca.
-     * @param scanner El Scanner para la entrada del usuario
+     * @param biblioteca
+     * @param scanner
      */
-    }
     public static void reemplazarLibro(Biblioteca biblioteca, Scanner scanner) {
         System.out.print("Ingrese el código del libro a reemplazar: ");
         String codigoLibro = scanner.nextLine();
@@ -263,8 +297,8 @@ public class Biblioteca {
     }
     /**
      * Método para crear un nuevo libro a partir de la entrada del usuario.
-     * @param scanner El Scanner para la entrada del usuario.
-     * @return El nuevo libro creado.
+     * @param scanner 
+     * @return 
      */
     private static Libro crearLibro(Scanner scanner) {
         System.out.print("Ingrese el código del nuevo libro: ");

@@ -57,7 +57,10 @@ public class Prestamo {
     
 
 
-    // Métodos getters y setters
+    /**
+     * Getters y Setters
+     * @return
+     */
     public String getCodigo() {
         return codigo;
     }

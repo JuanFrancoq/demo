@@ -34,7 +34,10 @@ public class Libro {
         unidadesDisponibles++;
     }
 
-    // Getters y Setters
+    /**
+     * Getters y Setters
+     * @return
+     */
 
     public String getCodigo() {
         return codigo;
